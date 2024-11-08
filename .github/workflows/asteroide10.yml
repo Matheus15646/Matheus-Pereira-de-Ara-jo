@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checa o código do repositório
+      - uses: actions/checkout@v4
+
+      # Configura o Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'  # ou a versão que você usa no seu projeto
+
+      # Instala as dependências
+      - name: Install dependencies
+        run: |
+          npm install  # ou 'yarn install', se você usa Yarn
+
+      # Executa o teste específico para asteroide10.js
+      - name: Run asteroid10 test
+        run: |
+          npm test __tests__/asteroide10.js  # ou 'yarn test __tests__/asteroide10.js'
+
+      # Etapa de deploy ou outras ações, caso necessário
+      - name: Deploy
+        run: echo "Deploying application..."
