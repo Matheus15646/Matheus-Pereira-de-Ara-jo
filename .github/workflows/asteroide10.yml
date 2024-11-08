@@ -19,17 +19,21 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'  # ou a versão que você usa no seu projeto
+          node-version: '16'  # ou a versão que você está usando no seu projeto
 
       # Instala as dependências
       - name: Install dependencies
         run: |
-          npm install  # ou 'yarn install', se você usa Yarn
+          npm install  # ou 'yarn install', se você usar Yarn
 
-      # Executa o teste específico para asteroide10.js
+      # Corrige permissões de execução do Jest (caso necessário)
+      - name: Fix Jest permissions
+        run: chmod +x node_modules/.bin/jest
+
+      # Executa o teste específico para asteroide10.spec.js
       - name: Run asteroid10 test
         run: |
-          npm test __tests__/asteroide10.js  # ou 'yarn test __tests__/asteroide10.js'
+          npx jest __testes__/asteroide10.spec.js  # ou 'npm test __testes__/asteroide10.spec.js' se configurado no package.json
 
       # Etapa de deploy ou outras ações, caso necessário
       - name: Deploy
