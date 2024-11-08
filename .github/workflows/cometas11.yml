@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checa o código do repositório
+      - uses: actions/checkout@v4
+
+      # Configura o Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'  # ou a versão que você está usando no seu projeto
+
+      # Instala as dependências
+      - name: Install dependencies
+        run: |
+          npm install  # ou 'yarn install', se você usar Yarn
+
+      # Corrige permissões de execução do Jest (caso necessário)
+      - name: Fix Jest permissions
+        run: chmod +x node_modules/.bin/jest
+
+      # Executa o teste específico para cometas11.spec.js
+      - name: Run cometas11 test
+        run: |
+          npx jest __testes__/cometas11.spec.js  # ou 'npm test __testes__/cometas11.spec.js' se configurado no package.json
+
+      # Etapa de deploy ou outras ações, caso necessário
+      - name: Deploy
+        run: echo "Deploying application..."
